@@ -215,11 +215,11 @@ export default class MainLayout extends Vue{
   }
 
   mounted() {
-    this.getCurrentUser();
-    this.getImages();
-    this.getStories();
-    this.getVideos();
-    this.getAudio();
+    // this.getCurrentUser();
+    // this.getImages();
+    // this.getStories();
+    // this.getVideos();
+    // this.getAudio();
   }
 };
 </script>

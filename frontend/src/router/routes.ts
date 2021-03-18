@@ -30,6 +30,16 @@ const routes: RouteConfig[] = [
         component: () => import('pages/Upload.vue'),
         beforeEnter: ifAuthenticated,
       },
+      {
+        path: '/cable',
+        name: 'cable',
+        component: () => import('pages/Cable.vue'),
+      },
+      // {
+      //   path: '/panel',
+      //   name: 'panel',
+      //   component: () => import('pages/Panel.vue'),
+      // },
     ]
   },
   {
