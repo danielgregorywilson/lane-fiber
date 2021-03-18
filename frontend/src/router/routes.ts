@@ -1,16 +1,16 @@
-import { Route, RouteConfig } from 'vue-router';
+import { RouteConfig } from 'vue-router';
 
-import authState from '../store/modules/auth/state'
+// import authState from '../store/modules/auth/state'
 
-type Next = (path?: string) => void
+// type Next = (path?: string) => void
 
-const ifAuthenticated = (to: Route, from: Route, next: Next) => {
-  if (!!authState.token) { // TODO: This should use the isAuthenticated getter
-    next()
-    return
-  }
-  next('auth/login')
-}
+// const ifAuthenticated = (to: Route, from: Route, next: Next) => {
+//   if (!!authState.token) { // TODO: This should use the isAuthenticated getter
+//     next()
+//     return
+//   }
+//   next('auth/login')
+// }
 
 // TODO: Add a reset password view as in Django version, unless we're authenticating with LDAP
 const routes: RouteConfig[] = [
@@ -25,39 +25,33 @@ const routes: RouteConfig[] = [
         component: () => import('pages/Dashboard.vue'),
       },
       {
-        path: '/upload',
-        name: 'upload',
-        component: () => import('pages/Upload.vue'),
-        beforeEnter: ifAuthenticated,
-      },
-      {
         path: '/cable',
         name: 'cable',
         component: () => import('pages/Cable.vue'),
       },
-      // {
-      //   path: '/panel',
-      //   name: 'panel',
-      //   component: () => import('pages/Panel.vue'),
-      // },
-    ]
-  },
-  {
-    path: '/auth',
-    component: () => import('layouts/AuthLayout.vue'),
-    children: [
       {
-        path: 'login',
-        name: 'login',
-        component: () => import('pages/auth/Login.vue'),
-      },
-      {
-        path: 'register',
-        name: 'register',
-        component: () => import('pages/auth/Register.vue'),
+        path: '/panel',
+        name: 'panel',
+        component: () => import('pages/Panel.vue'),
       },
     ]
   },
+  // {
+  //   path: '/auth',
+  //   component: () => import('layouts/AuthLayout.vue'),
+  //   children: [
+  //     {
+  //       path: 'login',
+  //       name: 'login',
+  //       component: () => import('pages/auth/Login.vue'),
+  //     },
+  //     {
+  //       path: 'register',
+  //       name: 'register',
+  //       component: () => import('pages/auth/Register.vue'),
+  //     },
+  //   ]
+  // },
 
   // Always leave this as last one,
   // but you can also remove it

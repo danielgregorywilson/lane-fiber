@@ -1,13 +1,45 @@
 <template>
   <q-page class="q-pa-md">
     <div class="form-header">
-      <div class="row justify-center text-h4 text-bold">Fiber Cable</div>
-      <div class="row justify-center">Complete form once for every cable reel</div>
+      <div class="row justify-center text-h4 text-bold">Patch Panel</div>
+      <div class="row justify-center">Complete form once for every patch panel</div>
     </div>
     <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Fiber Cable Location:</div>
+      <div class="text-bold">Patch Panel Location Description:</div>
       <q-input dense filled v-model="location" class="col"/>
     </div>
+
+    <hr />
+
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Owner:</div>
+      <div class="col">
+        <div class="row">
+          <q-radio v-model="owner" val="EWEB" label="EWEB" />
+          <q-radio v-model="owner" val="city" label="4J SD" />
+          <q-radio v-model="owner" val="LCOG" label="Bethel SD" />
+          <q-radio v-model="owner" val="SUB" label="Lane ESD" />
+          <q-radio v-model="owner" val="level3" label="LTD" />
+          <q-radio v-model="owner" val="LSN" label="LCOG" />
+          <q-radio v-model="owner" val="LSN" label="City of Eugene" />
+          <q-radio v-model="owner" val="LSN" label="City of Springfield" />
+          <q-radio v-model="owner" val="LSN" label="Lane County" />
+          <q-radio v-model="owner" val="LSN" label="SUB" />
+          <q-radio v-model="owner" val="LSN" label="Level 3" />
+          <q-radio v-model="owner" val="LSN" label="U of O" />
+          <div class="row">
+            <q-radio v-model="owner" val="other" label="Other" />
+            <q-input dense filled v-if="owner=='other'" v-model="otherOwner" class="q-pl-sm"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+    
+    <hr />
+
     <div class="row items-center q-gutter-md q-mt-xs">
       <div class="text-bold">Fiber Strand Count:</div>
       <q-input dense filled v-model="fiberStrandCount" />
@@ -104,23 +136,7 @@
 
     <hr />
     
-    <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Owner:</div>
-      <div class="col">
-        <div class="row">
-          <q-radio v-model="owner" val="EWEB" label="EWEB" />
-          <q-radio v-model="owner" val="city" label="City" />
-          <q-radio v-model="owner" val="LCOG" label="LCOG" />
-          <q-radio v-model="owner" val="SUB" label="SUB" />
-          <q-radio v-model="owner" val="level3" label="LEVEL 3" />
-          <q-radio v-model="owner" val="LSN" label="LSN" />
-          <div class="row">
-            <q-radio v-model="owner" val="other" label="Other" />
-            <q-input dense filled v-if="owner=='other'" v-model="otherOwner" class="q-pl-sm"/>
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="row items-center q-gutter-md q-mt-xs">
       <div class="text-bold">Installer:</div>
       <div class="col">
@@ -156,6 +172,12 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component({})
 export default class Dashboard extends Vue {
   private location = ''
+  private owner = ''
+  private otherOwner = ''
+
+
+
+  
   private fiberStrandCount = ''
   private strandConfig = ''
   private otherStrandConfig = ''
@@ -192,24 +214,11 @@ export default class Dashboard extends Vue {
   private otherManufacturer = ''
   private manufacturerCatalogNumber = ''
   private date = ''
-  private owner = ''
-  private otherOwner = ''
+  
   private installer = ''
   private otherInstaller = ''
   private comments = ''
   
-  
-  
-  
-  
-  
-
-  
-  
-  // private fieldsComplete(): boolean {
-  //   return !!this.story || this.type != 'story'
-  // }
-
   // private upload(): void {
   //   let fd = new FormData();
   //   fd.append('title', this.title)
