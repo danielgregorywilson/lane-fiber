@@ -16,17 +16,17 @@
       <div class="col">
         <div class="row">
           <q-radio v-model="owner" val="EWEB" label="EWEB" />
-          <q-radio v-model="owner" val="city" label="4J SD" />
-          <q-radio v-model="owner" val="LCOG" label="Bethel SD" />
-          <q-radio v-model="owner" val="SUB" label="Lane ESD" />
-          <q-radio v-model="owner" val="level3" label="LTD" />
-          <q-radio v-model="owner" val="LSN" label="LCOG" />
-          <q-radio v-model="owner" val="LSN" label="City of Eugene" />
-          <q-radio v-model="owner" val="LSN" label="City of Springfield" />
-          <q-radio v-model="owner" val="LSN" label="Lane County" />
-          <q-radio v-model="owner" val="LSN" label="SUB" />
-          <q-radio v-model="owner" val="LSN" label="Level 3" />
-          <q-radio v-model="owner" val="LSN" label="U of O" />
+          <q-radio v-model="owner" val="4J" label="4J SD" />
+          <q-radio v-model="owner" val="bethel" label="Bethel SD" />
+          <q-radio v-model="owner" val="ESD" label="Lane ESD" />
+          <q-radio v-model="owner" val="LTD" label="LTD" />
+          <q-radio v-model="owner" val="LCOG" label="LCOG" />
+          <q-radio v-model="owner" val="eugene" label="City of Eugene" />
+          <q-radio v-model="owner" val="springfield" label="City of Springfield" />
+          <q-radio v-model="owner" val="lane" label="Lane County" />
+          <q-radio v-model="owner" val="SUB" label="SUB" />
+          <q-radio v-model="owner" val="level3" label="Level 3" />
+          <q-radio v-model="owner" val="UO" label="U of O" />
           <div class="row">
             <q-radio v-model="owner" val="other" label="Other" />
             <q-input dense filled v-if="owner=='other'" v-model="otherOwner" class="q-pl-sm"/>
@@ -35,108 +35,73 @@
       </div>
     </div>
 
-    
-    
-    
     <hr />
 
     <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Fiber Strand Count:</div>
-      <q-input dense filled v-model="fiberStrandCount" />
+      <div class="text-bold">Mount Type:</div>
+      <q-option-group
+        v-model="mountType"
+        :options="mountTypeOptions"
+        inline
+      />
     </div>
     <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Buffer Tube/Strand Config:</div>
-      <div class="col">
-        <div class="row">
-          <q-radio v-model="strandConfig" val="12" label="Typical Tube Color Order – 12 strands/tube" />
-        </div>
-        <div class="row">
-          <q-radio v-model="strandConfig" val="6" label="Typical Tube Color Order– 6 strands/tube" />
-        </div>
-        <div class="row">
-          <q-radio v-model="strandConfig" val="other" label="Other" />
-          <q-input dense filled v-if="strandConfig=='other'" v-model="fiberCableLocation" class="q-pl-sm"/>
-        </div>
-      </div>
+      <div class="text-bold">Installation Type:</div>
+      <q-option-group
+        v-model="installationType"
+        :options="installationTypeOptions"
+        inline
+      />
     </div>
-    <div class="row justify-center">*Typical Tube Color Order = Blue, Orange, Green, Brown, Slate, White, Red, Black, Yellow, Violet, Rose, Aqua*</div>
-    
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Location:</div>
+      <q-option-group
+        v-model="locationType"
+        :options="locationTypeOptions"
+        inline
+      />
+    </div>
+
     <hr />
 
     <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Cable Type:</div>
+      <div class="text-bold">Number of Card Rows:</div>
+      <q-input dense filled v-model="cardRows" />
+    </div>
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Number of Card Columns:</div>
+      <q-input dense filled v-model="cardColumns" />
+    </div>
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Slot Orientation:</div>
+      <q-option-group
+        v-model="slotOrientation"
+        :options="slotOrientationOptions"
+        inline
+      />
+    </div>
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Number of Ports per Card:</div>
+      <q-input dense filled v-model="portsPerCard" />
+    </div>
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Port Type:</div>
       <div class="col">
         <div class="row">
-          <q-radio v-model="cableType" val="ADSSMini" label="ADSS Mini-Span" />
-          <q-radio v-model="cableType" val="ADSSMedium" label="ADSS Medium" />
-          <q-radio v-model="cableType" val="ADSSTransmission" label="ADSS Transmission" />
-          <q-radio v-model="cableType" val="UGArmored" label="UG Armored" />
-          <q-radio v-model="cableType" val="OPGW" label="OPGW" />
-          <q-radio v-model="cableType" val="ABF" label="ABF" />
+          <q-radio v-model="portType" val="SC" label="SC" />
+          <q-radio v-model="portType" val="LC" label="LC" />
+          <q-radio v-model="portType" val="ST" label="ST" />
           <div class="row">
-            <q-radio v-model="cableType" val="other" label="Other" />
-            <q-input dense filled v-if="cableType=='other'" v-model="otherCableType" class="q-pl-sm"/>
+            <q-radio v-model="portType" val="other" label="Other" />
+            <q-input dense filled v-if="portType=='other'" v-model="otherPortType" class="q-pl-sm"/>
           </div>
         </div>
       </div>
     </div>
     <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Infrastructure Class:</div>
-      <q-option-group
-        v-model="infrastructureClass"
-        :options="infrastructureClassOptions"
-        inline
-      />
+      <div class="text-bold">Panel Installation Date:</div>
+      <q-input dense filled v-model="installationDate" />
     </div>
-    <div class="row q-mt-xs items-center q-gutter-md">
-      <div class="text-bold">Foot Stamp Units:</div>
-      <q-option-group
-        v-model="footStampUnits"
-        :options="footStampUnitsOptions"
-        inline
-      />
-    </div>
-    <div class="row q-mt-xs items-center q-gutter-md">
-      <div class="text-bold">Foot Stamp No:</div>
-      <q-input dense filled v-model="footStampNumber" />
-    </div>
-
-    <hr />
-
-    <div class="row items-center q-gutter-md q-mt-xs">
-      <div class="text-bold">Manufacturer:</div>
-      <div class="col">
-        <div class="row">
-          <q-radio v-model="manufacturer" val="3M" label="3M" />
-          <q-radio v-model="manufacturer" val="AFL" label="AFL Telecom" />
-          <q-radio v-model="manufacturer" val="alcatel" label="Alcatel" />
-          <q-radio v-model="manufacturer" val="ATT" label="AT&T" />
-          <q-radio v-model="manufacturer" val="belde" label="Belde" />
-          <q-radio v-model="manufacturer" val="chromatic" label="Chromatic Tech" />
-          <q-radio v-model="manufacturer" val="draka" label="Draka USA" />
-          <q-radio v-model="manufacturer" val="OFS" label="OFS" />
-          <q-radio v-model="manufacturer" val="OCC" label="Optical Cable Corp" />
-          <q-radio v-model="manufacturer" val="prysmian" label="Prysmian/Pirelli" />
-          <q-radio v-model="manufacturer" val="remmee" label="Remmee Products Corp" />
-          <div class="row">
-            <q-radio v-model="manufacturer" val="other" label="Other" />
-            <q-input dense filled v-if="manufacturer=='other'" v-model="otherManufacturer" class="q-pl-sm"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row q-mt-xs items-center q-gutter-md">
-      <div class="text-bold">Manufacturer Catalog Number:</div>
-      <q-input dense filled v-model="manufacturerCatalogNumber" />
-    </div>
-    <div class="row q-mt-xs items-center q-gutter-md">
-      <div class="text-bold">Date:</div>
-      <q-input dense filled v-model="date" />
-    </div>
-
-    <hr />
-    
-    
     <div class="row items-center q-gutter-md q-mt-xs">
       <div class="text-bold">Installer:</div>
       <div class="col">
@@ -146,7 +111,26 @@
           <q-radio v-model="installer" val="astroTech" label="AstroTech" />
           <div class="row">
             <q-radio v-model="installer" val="other" label="Other" />
-            <q-input dense filled v-if="installer=='other'" v-model="otherInstaller" class="q-pl-sm"/>
+            <q-input dense filled v-if="installer=='other'" v-model="otherinstaller" class="q-pl-sm"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row items-center q-gutter-md q-mt-xs">
+      <div class="text-bold">Model Number:</div>
+      <div class="col">
+        <div class="row">
+          <q-radio v-model="model" val="BJ-1346" label="BJ-1346" />
+          <q-radio v-model="model" val="CCH-04U" label="CCH-04U" />
+          <q-radio v-model="model" val="FDC-001" label="FDC-001" />
+          <q-radio v-model="model" val="FDC-002" label="FDC-002" />
+          <q-radio v-model="model" val="FDC-005F" label="FDC-005F" />
+          <q-radio v-model="model" val="FL2000" label="FL2000" />
+          <q-radio v-model="model" val="WDC-001" label="WDC-001" />
+          <q-radio v-model="model" val="WDC-002" label="WDC-002" />
+          <div class="row">
+            <q-radio v-model="model" val="other" label="Other" />
+            <q-input dense filled v-if="model=='other'" v-model="otherModel" class="q-pl-sm"/>
           </div>
         </div>
       </div>
@@ -158,6 +142,24 @@
       <div class="text-bold">Additional Comments:</div>
       <q-input filled dense autogrow type="textarea" v-model="comments" class="col" />
     </div>
+
+    <hr />
+
+    <div class="row q-mt-xs items-center q-gutter-md">
+      <div class="col">
+        <div class="text-bold">Checklist:</div>
+        <q-option-group
+          v-model="checklistGroup"
+          :options="checklistOptions"
+          type="checkbox"
+          class="q-ml-xs"
+        />
+      </div>
+    </div>
+
+    <q-btn label="Submit" :disable="!formComplete()" @click="submit" class="q-mt-md" />
+    {{this.formComplete()}}
+
   </q-page>
 </template>
 
@@ -174,51 +176,93 @@ export default class Dashboard extends Vue {
   private location = ''
   private owner = ''
   private otherOwner = ''
-
-
-
-  
-  private fiberStrandCount = ''
-  private strandConfig = ''
-  private otherStrandConfig = ''
-  private cableType = ''
-  private otherCableType = ''
-  private infrastructureClass = ''
-  private infrastructureClassOptions = [
+  private mountType = ''
+  private mountTypeOptions = [
     {
-      label: 'Backbone',
-      value: 'backbone'
+      label: 'Rack',
+      value: 'rack'
     },
     {
-      label: 'Lateral',
-      value: 'lateral'
+      label: 'Frame',
+      value: 'frame'
     },
     {
-      label: 'Pigtail',
-      value: 'pigtail'
+      label: 'Cabinet',
+      value: 'cabinet'
     }
   ]
-  private footStampUnits = ''
-  private footStampUnitsOptions = [
+  private installationType = ''
+  private installationTypeOptions = [
     {
-      label: 'Foot',
-      value: 'foor'
+      label: 'Free Standing',
+      value: 'free'
     },
     {
-      label: 'Meter',
-      value: 'meter'
-    }
+      label: 'Wall Mount',
+      value: 'wall'
+    },
   ]
-  private footStampNumber = ''
-  private manufacturer = ''
-  private otherManufacturer = ''
-  private manufacturerCatalogNumber = ''
-  private date = ''
-  
+  private locationType = ''
+  private locationTypeOptions = [
+    {
+      label: 'Indoors',
+      value: 'indoors'
+    },
+    {
+      label: 'Outdoors',
+      value: 'outdoors'
+    },
+  ]
+  private cardRows = ''
+  private cardColumns = ''
+  private slotOrientation = ''
+  private slotOrientationOptions = [
+    {
+      label: 'Horizontal',
+      value: 'horizontal'
+    },
+    {
+      label: 'Vertical',
+      value: 'vertical'
+    },
+  ]
+  private portsPerCard = ''
+  private portType = ''
+  private otherPortType = ''
+  private installationDate = ''
   private installer = ''
   private otherInstaller = ''
+  private model = ''
+  private otherModel = ''
   private comments = ''
+  private checklistGroup = []
+  private checklistOptions = [
+    {
+      label: 'Fill In Form',
+      value: 'form'
+    },
+    {
+      label: 'Take Photo',
+      value: 'photo'
+    },
+    {
+      label: 'Gather Termination Info',
+      value: 'gatherInfo'
+    }
+  ]
   
+  private formComplete(): boolean {
+    let checker = arr => arr.every(Boolean);
+    return checker([
+      !!this.location,
+      !!this.owner,
+      this.owner != 'other' || !!this.otherOwner,
+      !!this.mountType,
+      !!this.installationType,
+      !!this.locationType,
+    ])
+  }
+
   // private upload(): void {
   //   let fd = new FormData();
   //   fd.append('title', this.title)
