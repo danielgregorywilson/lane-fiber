@@ -111,7 +111,7 @@
           <q-radio v-model="installer" val="astroTech" label="AstroTech" />
           <div class="row">
             <q-radio v-model="installer" val="other" label="Other" />
-            <q-input dense filled v-if="installer=='other'" v-model="otherinstaller" class="q-pl-sm"/>
+            <q-input dense filled v-if="installer=='other'" v-model="otherInstaller" class="q-pl-sm"/>
           </div>
         </div>
       </div>
@@ -252,7 +252,7 @@ export default class Dashboard extends Vue {
   ]
   
   private formComplete(): boolean {
-    let checker = arr => arr.every(Boolean);
+    let checker = (arr: Array<boolean>) => arr.every(Boolean);
     return checker([
       !!this.location,
       !!this.owner,
@@ -260,6 +260,20 @@ export default class Dashboard extends Vue {
       !!this.mountType,
       !!this.installationType,
       !!this.locationType,
+      !!this.cardRows,
+      !!this.cardColumns,
+      !!this.slotOrientation,
+      !!this.portsPerCard,
+      !!this.portType,
+      this.portType != 'other' || !!this.otherPortType,
+      !!this.installationDate,
+      !!this.installer,
+      this.installer != 'other' || !!this.otherInstaller,
+      !!this.model,
+      this.model != 'other' || !!this.otherModel,
+      this.checklistGroup.indexOf('form') != -1,
+      this.checklistGroup.indexOf('photo') != -1,
+      this.checklistGroup.indexOf('gatherInfo') != -1
     ])
   }
 

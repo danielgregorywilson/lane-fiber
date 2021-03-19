@@ -23,7 +23,7 @@
         </div>
         <div class="row">
           <q-radio v-model="strandConfig" val="other" label="Other" />
-          <q-input dense filled v-if="strandConfig=='other'" v-model="fiberCableLocation" class="q-pl-sm"/>
+          <q-input dense filled v-if="strandConfig=='other'" v-model="otherStrandConfig" class="q-pl-sm"/>
         </div>
       </div>
     </div>
@@ -142,6 +142,10 @@
       <div class="text-bold">Additional Comments:</div>
       <q-input filled dense autogrow type="textarea" v-model="comments" class="col" />
     </div>
+
+    <q-btn label="Submit" :disable="!formComplete()" @click="submit" class="q-mt-md" />
+    {{this.formComplete()}}
+
   </q-page>
 </template>
 
@@ -198,17 +202,28 @@ export default class Dashboard extends Vue {
   private otherInstaller = ''
   private comments = ''
   
-  
-  
-  
-  
-  
-
-  
-  
-  // private fieldsComplete(): boolean {
-  //   return !!this.story || this.type != 'story'
-  // }
+  private formComplete(): boolean {
+    let checker = (arr: Array<boolean>) => arr.every(Boolean);
+    return checker([
+      !!this.location,
+      !!this.fiberStrandCount,
+      !!this.strandConfig,
+      this.strandConfig != 'other' || !!this.otherStrandConfig,
+      !!this.cableType,
+      this.cableType != 'other' || !!this.otherCableType,
+      !!this.infrastructureClass,
+      !!this.footStampUnits,
+      !!this.footStampNumber,
+      !!this.manufacturer,
+      this.manufacturer != 'other' || !!this.otherManufacturer,
+      !!this.manufacturerCatalogNumber,
+      !!this.date,
+      !!this.owner,
+      this.owner != 'other' || !!this.otherOwner,
+      !!this.installer,
+      this.installer != 'other' || !!this.otherInstaller
+    ])
+  }
 
   // private upload(): void {
   //   let fd = new FormData();
