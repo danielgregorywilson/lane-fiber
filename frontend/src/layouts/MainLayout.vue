@@ -26,6 +26,42 @@
       :width="210"
     >
       <q-list>
+        <q-item v-if="profileLoaded()">
+          <q-item-section avatar>
+            <q-icon name='person' />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label v-if="profile().name">{{ profile().name }} </q-item-label>
+            <q-item-label v-else>{{ profile().username }} </q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          @click='logout'
+          v-if="profileLoaded()"
+        >
+          <q-item-section avatar>
+            <q-icon name='west' />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Log Out</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          @click='login'
+          v-if="!profileLoaded()"
+        >
+          <q-item-section avatar>
+            <q-icon name='login' />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Log In</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <hr class="drawer-divider"/>
+
         <q-item
           clickable
           @click='cableForm'
@@ -64,18 +100,56 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class MainLayout extends Vue{
   private leftDrawerOpen = false;
 
+  public profileLoaded(): boolean {
+    return this.$store.getters['userModule/isProfileLoaded'] // eslint-disable-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
+  }
+
+  public profile(): boolean {
+    return this.$store.getters['userModule/getEmployeeProfile'] // eslint-disable-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
+  }
+
+  public getCurrentUser(): void {
+    if (!this.$store.getters['userModule/isProfileLoaded']) { // eslint-disable-line @typescript-eslint/no-unsafe-member-access
+      this.$store.dispatch('userModule/userRequest')
+        .catch(e => {
+          console.error('Error getting user from store:', e)
+        })
+    }
+  }
+
   public cableForm(): void {
-    this.$router.push('/cable')
+    this.$router.push({ name: 'cable' })
       .catch(e => {
         console.error('Error navigating to cable page', e)
       })
   }
 
   public panelForm(): void {
-    this.$router.push('/panel')
+    this.$router.push({ name: 'panel' })
       .catch(e => {
         console.error('Error navigating to panel page', e)
       })
+  }
+
+  public login(): void {
+    this.$router.push({ name: 'login' })
+      .catch(e => {
+        console.error('Error navigating to register page', e)
+      })
+  }
+
+  public logout(): void {
+    this.$store.dispatch('authModule/authLogout')
+    .then(() => {
+      this.$router.push({ name: 'login' })
+    })
+    .catch(e => {
+      console.error('Error logging out', e);
+    })
+  }
+
+  mounted() {
+    this.getCurrentUser();
   }
 };
 </script>

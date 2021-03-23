@@ -100,7 +100,19 @@
     </div>
     <div class="row items-center q-gutter-md q-mt-xs">
       <div class="text-bold">Panel Installation Date:</div>
-      <q-input dense filled v-model="installationDate" />
+      <q-input dense filled v-model="installationDate" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+              <q-date v-model="installationDate">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
     <div class="row items-center q-gutter-md q-mt-xs">
       <div class="text-bold">Installer:</div>
@@ -317,7 +329,7 @@ export default class Dashboard extends Vue {
     if (this.portType == 'other') {
       fd.append('other_port_type', this.otherPortType)
     }
-    fd.append('installation_date', this.installationDate)
+    fd.append('installation_date', this.installationDate.split('/').join('-'))
     fd.append('installer', this.installer)
     if (this.installer == 'other') {
       fd.append('other_installer', this.otherInstaller)

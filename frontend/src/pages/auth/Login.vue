@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <form class="login" @submit.prevent="login">
-      <h4>Log in to post memories</h4>
+      <h4>Log In</h4>
       <div class="row q-pa-xs">
         <label class="q-pr-sm">Email</label>
         <input required v-model="username" id="username" type="email" placeholder="your@email.com" autocapitalize="none"/>
