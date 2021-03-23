@@ -99,9 +99,20 @@
     </div>
     <div class="row q-mt-xs items-center q-gutter-md">
       <div class="text-bold">Date:</div>
-      <q-input dense filled v-model="date" />
+      <q-input dense filled v-model="date" mask="date" :rules="['date']">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+              <q-date v-model="date">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </div>
-
     <hr />
     
     <div class="row items-center q-gutter-md q-mt-xs">
@@ -144,7 +155,7 @@
     </div>
 
     <q-btn label="Submit" :disable="!formComplete() || submitting" @click="submit" class="q-mt-md">
-      <q-spinner-cube v-if="submitting" class="q-ml-sm" />
+      <q-spinner-radio v-if="submitting" class="q-ml-sm" />
     </q-btn>
 
     <!-- Dialog to confirm successful submission -->
@@ -267,7 +278,7 @@ export default class Dashboard extends Vue {
       fd.append('other_manufacturer', this.otherManufacturer)
     }
     fd.append('manufacturer_catalog_number', this.manufacturerCatalogNumber)
-    fd.append('date', this.date)
+    fd.append('date', this.date.split('/').join('-'))
     fd.append('owner', this.owner)
     if (this.owner == 'other') {
       fd.append('other_owner', this.otherOwner)

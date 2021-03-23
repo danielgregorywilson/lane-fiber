@@ -58,7 +58,7 @@ class Cable(Infrastructure):
     manufacturer = models.CharField(max_length=9, choices=MANUFACTURER_CHOICES)
     other_manufacturer = models.CharField(max_length=200, blank=True, null=True)
     manufacturer_catalog_number = models.CharField(max_length=200)
-    date = models.CharField(max_length=200)
+    date = models.DateField(blank=True, null=True)
     OWNER_CHOICES = [
         ('EWEB', 'EWEB'),
         ('city', 'City'),
@@ -132,7 +132,7 @@ class Panel(Infrastructure):
     ]
     port_type = models.CharField(max_length=5, choices=PORT_TYPE_CHOICES)
     other_port_type = models.CharField(max_length=200, blank=True, null=True)
-    installation_date = models.CharField(max_length=200)
+    installation_date = models.DateField(blank=True, null=True)
     INSTALLER_CHOICES = [
         ('EWEB', 'EWEB'),
         ('MFS', 'MFS'),
