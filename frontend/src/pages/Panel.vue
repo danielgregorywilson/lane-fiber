@@ -235,7 +235,7 @@ export default class Dashboard extends Vue {
   private model = ''
   private otherModel = ''
   private comments = ''
-  private checklistGroup = []
+  private checklistGroup: Array<string> = []
   private checklistOptions = [
     {
       label: 'Fill In Form',

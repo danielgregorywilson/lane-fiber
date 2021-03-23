@@ -5,8 +5,8 @@ from django.urls import include, path
 
 # from api.views import RegisterView, UploadImageView, UploadStoryView, UploadVideoView, UploadAudioView
 from fiber.api_views import (
-    CurrentUserView,
-    UserViewSet, GroupViewSet,
+    CurrentUserView, GroupViewSet, SubmitCableView, SubmitPanelView,
+    UserViewSet, 
     # AudioViewSet, ImageViewSet, StoryViewSet,
     # VideoViewSet,
     # EmployeeViewSet, FileUploadViewSet,
@@ -18,6 +18,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token),
     path('v1/current-user/', CurrentUserView.as_view(), name='current_user'),
+    path('submit-cable/', SubmitCableView.as_view(), name='submit_cable'),
+    path('submit-panel/', SubmitPanelView.as_view(), name='submit_panel'),
     # path('register/', RegisterView.as_view(), name='auth_register'),
     # path('upload-image/', UploadImageView.as_view(), name='upload_image'),
     # path('upload-story/', UploadStoryView.as_view(), name='upload_story'),

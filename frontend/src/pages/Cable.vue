@@ -143,8 +143,27 @@
       <q-input filled dense autogrow type="textarea" v-model="comments" class="col" />
     </div>
 
-    <q-btn label="Submit" :disable="!formComplete()" @click="submit" class="q-mt-md" />
+    <q-btn label="Submit" :disable="!formComplete() || submitting" @click="submit" class="q-mt-md">
+      <q-spinner-cube v-if="submitting" class="q-ml-sm" />
+    </q-btn>
     {{this.formComplete()}}
+
+    <!-- Dialog to confirm successful submission -->
+    <q-dialog v-model="showSuccessfulSubmissionDialog" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="check" color="primary" text-color="white" />
+          <div class="col">
+            <span class="q-ml-sm row">Your submission has been received!</span>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Return to Dashboard" color="primary" @click="navigateToDashboard()" />
+          <q-btn flat label="Make another submission" color="primary" @click="submitAgain()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
   </q-page>
 </template>
@@ -184,7 +203,7 @@ export default class Dashboard extends Vue {
   private footStampUnitsOptions = [
     {
       label: 'Foot',
-      value: 'foor'
+      value: 'foot'
     },
     {
       label: 'Meter',
@@ -201,7 +220,11 @@ export default class Dashboard extends Vue {
   private installer = ''
   private otherInstaller = ''
   private comments = ''
+
+  private submitting = false
+  private showSuccessfulSubmissionDialog = false
   
+
   private formComplete(): boolean {
     let checker = (arr: Array<boolean>) => arr.every(Boolean);
     return checker([
@@ -225,61 +248,84 @@ export default class Dashboard extends Vue {
     ])
   }
 
-  // private upload(): void {
-  //   let fd = new FormData();
-  //   fd.append('title', this.title)
-  //   fd.append('description', this.description)
-  //   if (!this.date) {
-  //     this.date = ''
-  //   }
-  //   fd.append('date', this.date.split('/').join('-'))
+  private submit(): void {
+    this.submitting = true
+    let fd = new FormData();
+    fd.append('location', this.location)
+    fd.append('fiber_strand_count', this.fiberStrandCount)
+    fd.append('strand_config', this.strandConfig)
+    if (this.strandConfig == 'other') {
+      fd.append('other_strand_config', this.otherStrandConfig)
+    }
     
-  //   // const { type, title, description, date, file, story } = this
-  //   switch(this.type) {
-  //     case 'image':
-  //       fd.append('image', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-image/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading image memory:', e)
-  //         })
-  //       break;
-  //     case 'story':
-  //       fd.append('story', this.story)
-  //       axios({url: `${ process.env.API_URL }api/upload-story/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading story memory:', e)
-  //         })
-  //       break;
-  //     case 'video':
-  //       fd.append('video', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-video/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading video memory:', e)
-  //         })
-  //       break;
-  //     case 'audio':
-  //       fd.append('audio', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-audio/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading audio memory:', e)
-  //         })
-  //       break;
-  //     default:
-  //       // code block
-  //   }
-  // }
+    fd.append('cable_type', this.cableType)
+    if (this.cableType == 'other') {
+      fd.append('other_cable_type', this.otherCableType)
+    }
+    fd.append('infrastructure_class', this.infrastructureClass)
+    fd.append('foot_stamp_units', this.footStampUnits)
+    fd.append('foot_stamp_number', this.footStampNumber)
+
+    fd.append('manufacturer', this.manufacturer)
+    if (this.manufacturer == 'other') {
+      fd.append('other_manufacturer', this.otherManufacturer)
+    }
+    fd.append('manufacturer_catalog_number', this.manufacturerCatalogNumber)
+    fd.append('date', this.date)
+
+    fd.append('owner', this.owner)
+    if (this.owner == 'other') {
+      fd.append('other_owner', this.otherOwner)
+    }
+    fd.append('installer', this.installer)
+    if (this.installer == 'other') {
+      fd.append('other_installer', this.otherInstaller)
+    }
+    if (!!this.comments) {
+      fd.append('comments', this.comments)
+    } 
+
+
+    // console.log('url', `${ process.env.API_URL }api/submit-cable/`)
+    // debugger;
+    axios({url: `${ process.env.API_URL }api/submit-cable/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      .then(() => {
+        this.submitting = false
+        this.showSuccessfulSubmissionDialog = true
+      })
+      .catch(e => {
+        console.error('Error submitting cable change:', e)
+      })
+  }
+
+  private navigateToDashboard(): void {
+    this.$router.push('/')
+      .catch(e => {
+        console.error('Error navigating to dashboard:', e)
+      })
+  }
+
+  private submitAgain(): void {
+    this.location = ''
+    this.fiberStrandCount = ''
+    this.strandConfig = ''
+    this.otherStrandConfig = ''
+    this.cableType = ''
+    this.otherCableType = ''
+    this.infrastructureClass = ''
+    this.footStampUnits = ''
+    this.footStampNumber = ''
+    this.manufacturer = ''
+    this.otherManufacturer = ''
+    this.manufacturerCatalogNumber = ''
+    this.date = ''
+    this.owner = ''
+    this.otherOwner = ''
+    this.installer = ''
+    this.otherInstaller = ''
+    this.comments = ''
+    this.showSuccessfulSubmissionDialog = false
+  }
 
 };
 </script>

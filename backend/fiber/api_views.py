@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import (
     BasePermission, DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated,
@@ -11,11 +11,11 @@ from rest_framework.response import Response
 from django.contrib.auth.models import Group, User
 from django.shortcuts import get_object_or_404
 
-# from fiber.models import Audio, Image, Story, Video
+from fiber.models import Cable, Panel
 
 
 from fiber.serializers import (
-    GroupSerializer, 
+    CableSerializer, GroupSerializer, PanelSerializer,
     # AudioSerializer, ImageSerializer, StorySerializer,
     # VideoSerializer
     UserSerializer
@@ -46,6 +46,23 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     # permission_classes = [IsAdminOrReadOnly]
+
+
+class SubmitCableView(CreateAPIView):
+    model = Cable
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = CableSerializer
+
+
+class SubmitPanelView(CreateAPIView):
+    model = Panel
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = PanelSerializer
+
 
 
 # class StoryViewSet(viewsets.ModelViewSet):

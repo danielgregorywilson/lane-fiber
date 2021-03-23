@@ -1,35 +1,15 @@
 from django.contrib import admin
 
-# from .models import Choice, Question
-
-# admin.site.register(Question)
-# admin.site.register(Choice)
+from fiber.models import Cable, Panel
 
 
-# from .models import (
-#     Audio, Image, Story, Video
-# )
+class InfrastructureAdmin(admin.ModelAdmin):
+    list_display = ("location", "uploaded_at")
 
-# def approve(modeladmin, request, queryset):
-#     queryset.update(approved=True)
-# approve.short_description = "Approve memories"
+@admin.register(Cable)
+class CableAdmin(InfrastructureAdmin):
+    pass
 
-# class MemoryAdmin(admin.ModelAdmin):
-#     list_display = ("title", "uploaded_by", "approved")
-#     actions = [approve]    
-
-# @admin.register(Story)
-# class StoryAdmin(MemoryAdmin):
-#     pass
-
-# @admin.register(Image)
-# class ImageAdmin(MemoryAdmin):
-#     pass
-
-# @admin.register(Video)
-# class VideoAdmin(MemoryAdmin):
-#     pass
-
-# @admin.register(Audio)
-# class AudioAdmin(MemoryAdmin):
-#     pass
+@admin.register(Panel)
+class PanelAdmin(InfrastructureAdmin):
+    pass
