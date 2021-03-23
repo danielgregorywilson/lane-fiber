@@ -146,7 +146,6 @@
     <q-btn label="Submit" :disable="!formComplete() || submitting" @click="submit" class="q-mt-md">
       <q-spinner-cube v-if="submitting" class="q-ml-sm" />
     </q-btn>
-    {{this.formComplete()}}
 
     <!-- Dialog to confirm successful submission -->
     <q-dialog v-model="showSuccessfulSubmissionDialog" persistent>
@@ -224,7 +223,6 @@ export default class Dashboard extends Vue {
   private submitting = false
   private showSuccessfulSubmissionDialog = false
   
-
   private formComplete(): boolean {
     let checker = (arr: Array<boolean>) => arr.every(Boolean);
     return checker([
@@ -257,7 +255,6 @@ export default class Dashboard extends Vue {
     if (this.strandConfig == 'other') {
       fd.append('other_strand_config', this.otherStrandConfig)
     }
-    
     fd.append('cable_type', this.cableType)
     if (this.cableType == 'other') {
       fd.append('other_cable_type', this.otherCableType)
@@ -265,14 +262,12 @@ export default class Dashboard extends Vue {
     fd.append('infrastructure_class', this.infrastructureClass)
     fd.append('foot_stamp_units', this.footStampUnits)
     fd.append('foot_stamp_number', this.footStampNumber)
-
     fd.append('manufacturer', this.manufacturer)
     if (this.manufacturer == 'other') {
       fd.append('other_manufacturer', this.otherManufacturer)
     }
     fd.append('manufacturer_catalog_number', this.manufacturerCatalogNumber)
     fd.append('date', this.date)
-
     fd.append('owner', this.owner)
     if (this.owner == 'other') {
       fd.append('other_owner', this.otherOwner)
@@ -284,10 +279,6 @@ export default class Dashboard extends Vue {
     if (!!this.comments) {
       fd.append('comments', this.comments)
     } 
-
-
-    // console.log('url', `${ process.env.API_URL }api/submit-cable/`)
-    // debugger;
     axios({url: `${ process.env.API_URL }api/submit-cable/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
       .then(() => {
         this.submitting = false

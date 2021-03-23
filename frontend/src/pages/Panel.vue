@@ -157,8 +157,26 @@
       </div>
     </div>
 
-    <q-btn label="Submit" :disable="!formComplete()" @click="submit" class="q-mt-md" />
-    {{this.formComplete()}}
+    <q-btn label="Submit" :disable="!formComplete() || submitting" @click="submit" class="q-mt-md">
+      <q-spinner-cube v-if="submitting" class="q-ml-sm" />
+    </q-btn>
+
+    <!-- Dialog to confirm successful submission -->
+    <q-dialog v-model="showSuccessfulSubmissionDialog" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="check" color="primary" text-color="white" />
+          <div class="col">
+            <span class="q-ml-sm row">Your submission has been received!</span>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Return to Dashboard" color="primary" @click="navigateToDashboard()" />
+          <q-btn flat label="Make another submission" color="primary" @click="submitAgain()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
   </q-page>
 </template>
@@ -250,6 +268,9 @@ export default class Dashboard extends Vue {
       value: 'gatherInfo'
     }
   ]
+
+  private submitting = false
+  private showSuccessfulSubmissionDialog = false
   
   private formComplete(): boolean {
     let checker = (arr: Array<boolean>) => arr.every(Boolean);
@@ -277,61 +298,77 @@ export default class Dashboard extends Vue {
     ])
   }
 
-  // private upload(): void {
-  //   let fd = new FormData();
-  //   fd.append('title', this.title)
-  //   fd.append('description', this.description)
-  //   if (!this.date) {
-  //     this.date = ''
-  //   }
-  //   fd.append('date', this.date.split('/').join('-'))
-    
-  //   // const { type, title, description, date, file, story } = this
-  //   switch(this.type) {
-  //     case 'image':
-  //       fd.append('image', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-image/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading image memory:', e)
-  //         })
-  //       break;
-  //     case 'story':
-  //       fd.append('story', this.story)
-  //       axios({url: `${ process.env.API_URL }api/upload-story/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading story memory:', e)
-  //         })
-  //       break;
-  //     case 'video':
-  //       fd.append('video', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-video/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading video memory:', e)
-  //         })
-  //       break;
-  //     case 'audio':
-  //       fd.append('audio', this.file)
-  //       axios({url: `${ process.env.API_URL }api/upload-audio/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
-  //         .then(() => {
-  //           this.successfulUpload = true
-  //         })
-  //         .catch(e => {
-  //           console.error('Error uploading audio memory:', e)
-  //         })
-  //       break;
-  //     default:
-  //       // code block
-  //   }
-  // }
+  private submit(): void {
+    this.submitting = true
+    let fd = new FormData();
+    fd.append('location', this.location)
+    fd.append('owner', this.owner)
+    if (this.owner == 'other') {
+      fd.append('other_owner', this.otherOwner)
+    }
+    fd.append('mount_type', this.mountType)
+    fd.append('installation_type', this.installationType)
+    fd.append('location_type', this.locationType)
+    fd.append('card_rows', this.cardRows)
+    fd.append('card_columns', this.cardColumns)
+    fd.append('slot_orientation', this.slotOrientation)
+    fd.append('ports_per_card', this.portsPerCard)
+    fd.append('port_type', this.portType)
+    if (this.portType == 'other') {
+      fd.append('other_port_type', this.otherPortType)
+    }
+    fd.append('installation_date', this.installationDate)
+    fd.append('installer', this.installer)
+    if (this.installer == 'other') {
+      fd.append('other_installer', this.otherInstaller)
+    }
+    fd.append('model', this.model)
+    if (this.model == 'other') {
+      fd.append('other_model', this.otherModel)
+    }
+    if (!!this.comments) {
+      fd.append('comments', this.comments)
+    } 
+
+    axios({url: `${ process.env.API_URL }api/submit-panel/`, data: fd, method: 'POST' }) // eslint-disable-line @typescript-eslint/restrict-template-expressions
+      .then(() => {
+        this.submitting = false
+        this.showSuccessfulSubmissionDialog = true
+      })
+      .catch(e => {
+        console.error('Error submitting panel change:', e)
+      })
+  }
+
+  private navigateToDashboard(): void {
+    this.$router.push('/')
+      .catch(e => {
+        console.error('Error navigating to dashboard:', e)
+      })
+  }
+
+  private submitAgain(): void {
+    this.location = ''
+    this.owner = ''
+    this.otherOwner = ''
+    this.mountType = ''
+    this.installationType = ''
+    this.locationType = ''
+    this.cardRows = ''
+    this.cardColumns = ''
+    this.slotOrientation = ''
+    this.portsPerCard = ''
+    this.portType = ''
+    this.otherPortType = ''
+    this.installationDate = ''
+    this.installer = ''
+    this.otherInstaller = ''
+    this.model = ''
+    this.otherModel = ''
+    this.comments = ''
+    this.checklistGroup = []
+    this.showSuccessfulSubmissionDialog = false
+  }
 
 };
 </script>

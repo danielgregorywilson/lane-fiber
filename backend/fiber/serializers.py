@@ -74,112 +74,34 @@ class CableSerializer(serializers.HyperlinkedModelSerializer):
 class PanelSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = Cable
+        model = Panel
         fields = [
-            'location', 'fiber_strand_count', 'strand_config',
-            'other_strand_config', 'cable_type', 'other_cable_type',
-            'infrastructure_class', 'foot_stamp_units', 'foot_stamp_number',
-            'manufacturer', 'other_manufacturer',
-            'manufacturer_catalog_number', 'date', 'owner', 'other_owner',
-            'installer', 'other_installer', 'comments'
+            'location', 'owner', 'other_owner', 'mount_type',
+            'installation_type', 'location_type', 'card_rows', 'card_columns',
+            'slot_orientation', 'ports_per_card', 'port_type',
+            'other_port_type', 'installation_date', 'installer',
+            'other_installer', 'model', 'other_model', 'comments'
         ]
     
     def create(self, validated_data):
-        cable = Cable.objects.create(
+        panel = Panel.objects.create(
             location=validated_data['location'],
-            fiber_strand_count=validated_data['fiber_strand_count'],
-            strand_config=validated_data['strand_config'],
-            other_strand_config=validated_data['other_strand_config'],
-            cable_type=validated_data['cable_type'],
-            other_cable_type=validated_data['other_cable_type'],
-            infrastructure_class=validated_data['infrastructure_class'],
-            foot_stamp_units=validated_data['foot_stamp_units'],
-            foot_stamp_number=validated_data['foot_stamp_number'],
-            manufacturer=validated_data['manufacturer'],
-            other_manufacturer=validated_data['other_manufacturer'],
-            manufacturer_catalog_number=validated_data['manufacturer_catalog_number'],
-            date=validated_data['date'],
             owner=validated_data['owner'],
-            other_owner=validated_data['other_owner'],
+            other_owner=validated_data.get('other_owner', None),
+            mount_type=validated_data['mount_type'],
+            installation_type=validated_data['installation_type'],
+            location_type=validated_data['location_type'],
+            card_rows=validated_data['card_rows'],
+            card_columns=validated_data['card_columns'],
+            slot_orientation=validated_data['slot_orientation'],
+            ports_per_card=validated_data['ports_per_card'],
+            port_type=validated_data['port_type'],
+            other_port_type=validated_data.get('other_port_type', None),
+            installation_date=validated_data['installation_date'],
             installer=validated_data['installer'],
-            other_installer=validated_data['other_installer'],
-            comments=validated_data['comments']
+            other_installer=validated_data.get('other_installer', None),
+            model=validated_data['model'],
+            other_model=validated_data.get('other_model', None),
+            comments=validated_data.get('comments', None)
         )
-        return cable
-
-
-# class StorySerializer(serializers.HyperlinkedModelSerializer):
-
-#     class Meta:
-#         model = Story
-#         fields = ['pk', 'story', 'title', 'description', 'date']
-
-#     def create(self, validated_data):
-#         story = Story.objects.create(
-#             story=validated_data['story'],
-#             uploaded_by=self.context['request'].user,
-#             title=validated_data.get('title', ''),
-#             description=validated_data.get('description', ''),
-#         )
-#         if 'date' in validated_data:
-#             story.date = validated_data['date']
-#             story.save()
-#         return story
-
-
-# class ImageSerializer(serializers.HyperlinkedModelSerializer):
-#     date = serializers.DateField(required=False)
-
-#     class Meta:
-#         model = Image
-#         fields = ['pk', 'image', 'title', 'description', 'date']
-    
-#     def create(self, validated_data):
-#         image = Image.objects.create(
-#             image=validated_data['image'],
-#             uploaded_by=self.context['request'].user,
-#             title=validated_data.get('title', ''),
-#             description=validated_data.get('description', ''),
-#         )
-#         if 'date' in validated_data:
-#             image.date = validated_data['date']
-#             image.save()
-#         return image
-
-
-# class VideoSerializer(serializers.HyperlinkedModelSerializer):
-
-#     class Meta:
-#         model = Video
-#         fields = ['pk', 'video', 'title', 'description', 'date']
-    
-#     def create(self, validated_data):
-#         video = Video.objects.create(
-#             video=validated_data['video'],
-#             uploaded_by=self.context['request'].user,
-#             title=validated_data.get('title', ''),
-#             description=validated_data.get('description', ''),
-#         )
-#         if 'date' in validated_data:
-#             video.date = validated_data['date']
-#             video.save()
-#         return video
-
-
-# class AudioSerializer(serializers.HyperlinkedModelSerializer):
-
-#     class Meta:
-#         model = Audio
-#         fields = ['pk', 'audio', 'title', 'description', 'date']
-
-#     def create(self, validated_data):
-#         audio = Audio.objects.create(
-#             audio=validated_data['audio'],
-#             uploaded_by=self.context['request'].user,
-#             title=validated_data.get('title', ''),
-#             description=validated_data.get('description', ''),
-#         )
-#         if 'date' in validated_data:
-#             audio.date = validated_data['date']
-#             audio.save()
-#         return audio
+        return panel

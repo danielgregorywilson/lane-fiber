@@ -83,16 +83,75 @@ class Cable(Infrastructure):
 
 class Panel(Infrastructure):
     location = models.CharField(max_length=200)
-    owner = models.CharField(max_length=200)
-    mount_type = models.CharField(max_length=200)
-    installation_type = models.CharField(max_length=200)
-    location_type = models.CharField(max_length=200)
+    OWNER_CHOICES = [
+        ('EWEB', 'EWEB'),
+        ('4J', '4J SD'),
+        ('bethel', 'Bethel SD'),
+        ('ESD', 'Lane ESD'),
+        ('LTD', 'LTD'),
+        ('LCOG', 'LCOG'),
+        ('eugene', 'City of Eugene'),
+        ('springfield', 'City of Springfield'),
+        ('lane', 'Lane County'),
+        ('SUB', 'SUB'),
+        ('level3', 'Level 3'),
+        ('UO', 'U of O'),
+        ('other', 'Other')
+    ]
+    owner = models.CharField(max_length=11, choices=OWNER_CHOICES)
+    other_owner = models.CharField(max_length=200, blank=True, null=True)
+    MOUNT_TYPE_CHOICES = [
+        ('rack', 'Rack'),
+        ('frame', 'Frame'),
+        ('cabinet', 'Cabinet')
+    ]
+    mount_type = models.CharField(max_length=7, choices=MOUNT_TYPE_CHOICES)
+    MOUNT_TYPE_CHOICES = [
+        ('free', 'Free Standing'),
+        ('wall', 'Wall Mount')
+    ]
+    installation_type = models.CharField(max_length=4, choices=MOUNT_TYPE_CHOICES)
+    LOCATION_TYPE_CHOICES = [
+        ('indoors', 'Indoors'),
+        ('outdoors', 'Outdoors')
+    ]
+    location_type = models.CharField(max_length=8, choices=LOCATION_TYPE_CHOICES)
     card_rows = models.CharField(max_length=200)
     card_columns = models.CharField(max_length=200)
-    slot_orientation = models.CharField(max_length=200)
+    SLOT_ORIENTATION_CHOICES = [
+        ('horizontal', 'Horizontal'),
+        ('vertical', 'Vertical')
+    ]
+    slot_orientation = models.CharField(max_length=10, choices=SLOT_ORIENTATION_CHOICES)
     ports_per_card = models.CharField(max_length=200)
-    port_type = models.CharField(max_length=200)
+    PORT_TYPE_CHOICES = [
+        ('SC', 'SC'),
+        ('LC', 'LC'),
+        ('ST', 'ST'),
+        ('other', 'Other')
+    ]
+    port_type = models.CharField(max_length=5, choices=PORT_TYPE_CHOICES)
+    other_port_type = models.CharField(max_length=200, blank=True, null=True)
     installation_date = models.CharField(max_length=200)
-    installer = models.CharField(max_length=200)
-    model = models.CharField(max_length=200)
+    INSTALLER_CHOICES = [
+        ('EWEB', 'EWEB'),
+        ('MFS', 'MFS'),
+        ('astroTech', 'AstroTech'),
+        ('other', 'Other')
+    ]
+    installer = models.CharField(max_length=9, choices=INSTALLER_CHOICES)
+    other_installer = models.CharField(max_length=200, blank=True, null=True)
+    MODEL_CHOICES = [
+        ('BJ-1346', 'BJ-1346'),
+        ('CCH-04U', 'CCH-04U'),
+        ('FDC-001', 'FDC-001'),
+        ('FDC-002', 'FDC-002'),
+        ('FDC-005F', 'FDC-005F'),
+        ('FL2000', 'FL2000'),
+        ('WDC-001', 'WDC-001'),
+        ('WDC-002', 'WDC-002'),
+        ('other', 'Other')
+    ]
+    model = models.CharField(max_length=8, choices=MODEL_CHOICES)
+    other_model = models.CharField(max_length=200, blank=True, null=True)
     comments = models.CharField(max_length=200, blank=True, null=True)
