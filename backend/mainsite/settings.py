@@ -33,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'lane-fiber',
+    'lane-fiber.s3-website-us-west-2.amazonaws.com', # Prod frontend
     'lane-fiber-env.eba-n4u348rr.us-west-2.elasticbeanstalk.com', # Prod backend
 ]
 
