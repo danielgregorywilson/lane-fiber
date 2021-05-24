@@ -44,25 +44,33 @@ cd frontend && quasar dev
 cd frontend
 quasar build
 ```
-Navigate to https://s3.console.aws.amazon.com/s3/buckets/celebrating-jesse-frontend/
+Navigate to https://s3.console.aws.amazon.com/s3/buckets/lane-fiber
 Under the 'Objects' tab is the list of files
 Drag the contents of frontend/dist/spa to the window to upload the build
 
 # Locations
 Production Frontend
 ```url
-http://celebrating-jesse-frontend.s3-website-us-west-2.amazonaws.com
+http://lane-fiber.s3-website-us-west-2.amazonaws.com/
 ```
 Production Backend (API)
 ```url
-https://celebrating-jesse.wl.r.appspot.com/api/
+http://lane-fiber-env.eba-n4u348rr.us-west-2.elasticbeanstalk.com/api/
+```
+Production Backend (Admin)
+```url
+http://lane-fiber-env.eba-n4u348rr.us-west-2.elasticbeanstalk.com/admin/
 ```
 
 Local Frontend
 ```url
-http://jesse-memorial:8080/dashboard
+http://lane-fiber:8080/dashboard
 ```
 Local Backend (API)
 ```url
-http://jesse-memorial:8000/api/
+http://lane-fiber:8000/api/
+```
+Local Backend (Admin)
+```url
+http://lane-fiber:8000/admin/
 ```
