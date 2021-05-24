@@ -18,13 +18,6 @@ In mainsite/middleware/CorsMiddleware, make sure the correct response["Access-Co
 `source ../env/bin/activate`
 `eb deploy --profile lcog`
 
-## Other useful things
-Authenticate with credentials for billing and quotas
-```bash
-gcloud auth application-default login
-```
-Set up with: https://cloud.google.com/python/django/appengine
-
 # Frontend: Quasar (Vue) on AWS S3
 
 ## First time setup
@@ -47,11 +40,9 @@ cd frontend && quasar dev
 ```
 
 # Deploy frontend
-```bash
-cd frontend
-quasar build
-```
-Navigate to https://s3.console.aws.amazon.com/s3/buckets/celebrating-jesse-frontend/
+`cd frontend`
+`quasar build`
+Navigate to https://s3.console.aws.amazon.com/s3/buckets/team.lcog.org/
 Under the 'Objects' tab is the list of files
 Drag the contents of frontend/dist/spa to the window to upload the build
 
