@@ -40,9 +40,11 @@ cd frontend && quasar dev
 ```
 
 # Deploy frontend
-`cd frontend`
-`quasar build`
-Navigate to https://s3.console.aws.amazon.com/s3/buckets/team.lcog.org/
+```bash
+cd frontend
+quasar build
+```
+Navigate to https://s3.console.aws.amazon.com/s3/buckets/celebrating-jesse-frontend/
 Under the 'Objects' tab is the list of files
 Drag the contents of frontend/dist/spa to the window to upload the build
 
