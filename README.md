@@ -1,23 +1,19 @@
 # Backend: Django on Google Cloud Platform/App Engine
 
 ## Run app locally
-In a separate terminal instance, start the Cloud SQL Proxy to connect to the remote MySQL DB
-```bash
-cd backend && ./cloud_sql_proxy -instances="celebrating-jesse:us-west1:celebrating-jesse"=tcp:3306
-```
 Activate Python Environment
 ```bash
 source ../env/bin/activate && cd backend && python manage.py runserver
 ```
 
-## Deploy app
-```bash
-gcloud app deploy
-```
-Open app in browser
-```bash
-gcloud app browse
-```
+## First time deploy
+Follow these instructions. Don't worry about the old Django version (2.2) they use. v3.1.7 is fine.
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
+
+## Deploy backend
+In mainsite/middleware/CorsMiddleware, make sure the correct response["Access-Control-Allow-Origin"] is commented out.
+`source ../env/bin/activate`
+`eb deploy --profile lcog`
 
 ## Other useful things
 Authenticate with credentials for billing and quotas
