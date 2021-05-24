@@ -7,8 +7,10 @@ source ../env/bin/activate && cd backend && python manage.py runserver
 ```
 
 ## First time deploy
-Follow these instructions. Don't worry about the old Django version (2.2) they use. v3.1.7 is fine.
+Follow these instructions.
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
+-Don't worry about the old Django version (2.2) they use. v3.1.7 is fine.
+-Use Python 3.7, not Python 3.6.
 
 ## Deploy backend
 In mainsite/middleware/CorsMiddleware, make sure the correct response["Access-Control-Allow-Origin"] is commented out.

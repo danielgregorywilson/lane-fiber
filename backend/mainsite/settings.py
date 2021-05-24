@@ -33,8 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'lane-fiber',
-    # 'celebrating-jesse.wl.r.appspot.com',
-    # 'http://celebrating-jesse-frontend.s3-website-us-west-2.amazonaws.com',
+    'lane-fiber-env.eba-psinhcap.us-west-2.elasticbeanstalk.com', # Prod backend
 ]
 
 # Application definition
