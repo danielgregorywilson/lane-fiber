@@ -11,6 +11,7 @@ Follow these instructions.
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
 -Don't worry about the old Django version (2.2) they use. v3.1.7 is fine.
 -Use Python 3.7, not Python 3.6.
+-Remember to append ```--profile lcog``` to ```eb create```, ```eb status```, and ```eb deploy``` commands
 
 ## Deploy backend
 In mainsite/middleware/CorsMiddleware, make sure the correct response["Access-Control-Allow-Origin"] is commented out.
