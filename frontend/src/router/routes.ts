@@ -1,4 +1,4 @@
-import { RouteConfig } from 'vue-router';
+import { Route, RouteConfig } from 'vue-router';
 
 import authState from '../store/modules/auth/state'
 

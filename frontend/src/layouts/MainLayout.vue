@@ -142,6 +142,9 @@ export default class MainLayout extends Vue{
     this.$store.dispatch('authModule/authLogout')
     .then(() => {
       this.$router.push({ name: 'login' })
+        .catch(e => {
+          console.error('Error navigating to login page', e)
+        })
     })
     .catch(e => {
       console.error('Error logging out', e);
