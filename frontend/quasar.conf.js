@@ -51,8 +51,8 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
-        API_URL: ctx.dev ? 'http://lane-fiber:8000/' : 'https://celebrating-jesse.wl.r.appspot.com/'
-        // API_URL: 'https://celebrating-jesse.wl.r.appspot.com/'
+        API_URL: ctx.dev ? 'http://lane-fiber:8000/' : 'http://lane-fiber-env.eba-n4u348rr.us-west-2.elasticbeanstalk.com/'
+        // API_URL: 'http://lane-fiber-env.eba-n4u348rr.us-west-2.elasticbeanstalk.com/'
       },
 
       // transpile: false,
