@@ -204,3 +204,5 @@ REST_FRAMEWORK = {
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
 #     "./celebrating-jesse-4a93e9d763a8-storage-service-account.json"
 # )
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
