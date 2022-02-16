@@ -2,8 +2,13 @@
 
 ## Run app locally
 Activate Python Environment
+MacOS
 ```bash
 source ../env/bin/activate && cd backend && python manage.py runserver
+```
+Windows 10
+```bash
+.\env_20220112\Scripts\activate && cd backend && python manage.py runserver
 ```
 
 ## First time deploy
